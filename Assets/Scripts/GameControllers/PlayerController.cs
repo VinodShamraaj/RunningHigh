@@ -24,16 +24,17 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         float joystickX = joystickController.joystickVector.x;
+        Vector2 velocity = rigidBody.velocity;
 
         // Handle Animations
         spriteRenderer.flipX = joystickX < 0f;
         animator.SetFloat("Velocity", Math.Abs(joystickX));
-
-
+        animator.SetFloat("VelocityY", velocity.y);
 
         if (joystickX != 0)
         {
-            rigidBody.velocity = new Vector2(joystickX * playerSpeed, 0);
+            velocity.x = joystickX * playerSpeed;
+            rigidBody.velocity = velocity;
         }
         else
         {
