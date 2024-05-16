@@ -9,7 +9,6 @@ public class MovementController : MonoBehaviour
     public CharacterController2D playerController;
     public JoystickController joystickController;
     public float playerSpeed;
-    private SpriteRenderer spriteRenderer;
     private Rigidbody2D rigidBody;
     private Animator animator;
 
@@ -18,7 +17,6 @@ public class MovementController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
