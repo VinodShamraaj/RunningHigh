@@ -5,14 +5,21 @@ using UnityEngine.UI;
 public class Score : MonoBehaviour
 {
     private int startpoint;
+    float scoreCounter;
 
-    // Reference to UI text that shows the distance value
+
+    // Reference to UI text that shows the score value
     [SerializeField]
     private Text scoreText;
     private GameObject playerObj = null;
 
     // Calculated distance value
     private float score;
+
+    // Reference to UI text that shows the score value
+    [SerializeField]
+    private Text timerText;
+    private float elapsedTime;
 
         private void Start()
     {
@@ -25,15 +32,28 @@ public class Score : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        // Calculate distance value between character and startpoint
-        score = (float)Math.Round(playerObj.transform.position.x - startpoint);
+        // Add timer here
+        elapsedTime += Time.deltaTime;
+        int minutes = Mathf.FloorToInt(elapsedTime/60);
+        int seconds = Mathf.FloorToInt(elapsedTime % 60);
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
-        // Prevent negative
-        if (score < 0)
-            score  = 0;
+        // Calculate score every second instead of frame
+        // Used delta time instead of Coroutine
+        scoreCounter += Time.deltaTime;
 
-        // Display distance value via UI text
-        scoreText.text = "Score: " + score.ToString();
+        while(scoreCounter >= 1f) {
+            // Calculate distance value between character and startpoint
+            score = (float)Math.Round(playerObj.transform.position.x - startpoint);
+
+            // Prevent negative
+            if (score < 0)
+                score  = 0;
+
+            // Display distance value via UI text
+            scoreText.text = "Score: " + score.ToString();
+            scoreCounter -= 1f;
+        }
     }
 
 }
