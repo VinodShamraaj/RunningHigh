@@ -1,24 +1,52 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
 public class MovementController : MonoBehaviour
 {
-    public CharacterController2D playerController;
-    public JoystickController joystickController;
-    public float playerSpeed;
+    [SerializeField]
+    private CharacterController2D playerController;
+
+    [SerializeField]
+    private JoystickController joystickController;
+
+    [SerializeField]
+    private GameObject helmetObject;
+
+    [SerializeField]
+    private float playerSpeed;
+
+    [SerializeField]
+    private float playerSpeedKeyboard;
+
     private Rigidbody2D rigidBody;
     private Animator animator;
+    private Rigidbody2D helmetRigidBody;
 
     private bool isJump = false;
+    private float horizontalMove = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        if (helmetObject != null)
+        {
+            helmetRigidBody = helmetObject.GetComponent<Rigidbody2D>();
+        }
+
+    }
+
+    private void Update()
+    {
+        horizontalMove = Input.GetAxisRaw("Horizontal") * playerSpeedKeyboard * 100;
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            isJump = true;
+        }
     }
 
     // Update is called once per frame
@@ -26,18 +54,27 @@ public class MovementController : MonoBehaviour
     {
         float joystickX = joystickController.joystickVector.x;
         float velocityY = rigidBody.velocity.y;
+        float velocity = Math.Abs(joystickX);
+        float velocityKeyboard = Math.Abs(horizontalMove);
 
         // Handle Animations
-        // spriteRenderer.flipX = joystickX < 0f;
-        animator.SetFloat("Velocity", Math.Abs(joystickX));
+        animator.SetFloat("Velocity", velocity);
         animator.SetFloat("VelocityY", velocityY);
-
 
         float movement = joystickX * playerSpeed * 100;
 
-        playerController.Move(movement * Time.fixedDeltaTime, false, isJump);
-        isJump = false;
+        if (movement != 0)
+        {
+            animator.SetFloat("Velocity", velocity);
+            playerController.Move(movement * Time.fixedDeltaTime, false, isJump);
+        }
+        else
+        {
+            animator.SetFloat("Velocity", velocityKeyboard);
+            playerController.Move(horizontalMove * Time.fixedDeltaTime, false, isJump);
+        }
 
+        isJump = false;
     }
 
     public void JumpClick()
