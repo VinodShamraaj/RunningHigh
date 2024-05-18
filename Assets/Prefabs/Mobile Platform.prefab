@@ -103,7 +103,7 @@ MonoBehaviour:
   wholeObject: {fileID: 5102025887509209354}
   baseObject: {fileID: 2667945641359166758}
   beamObject: {fileID: 6052483964806580223}
-  extension: 100
+  extension: 250
   increments: 800
 --- !u!61 &9072089095873544222
 BoxCollider2D:
