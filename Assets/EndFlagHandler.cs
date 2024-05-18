@@ -14,7 +14,7 @@ public class EndFlagHandler : MonoBehaviour
         if (col.gameObject.name == "Player")
         {
             scoreController.SetGameEnded();
-            SceneManager.LoadSceneAsync(3);
+            SceneManager.LoadSceneAsync(4);
         }
     }
 }
