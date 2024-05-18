@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Tutorial.unity
     guid: 151af760fdfd4934780a24761f92cac2
   - enabled: 1
+    path: Assets/Scenes/MalayTutorial.unity
+    guid: 3e2289790f7d9b841a7edb67536a484d
+  - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: 3fc8acdd13e6c734bafef6554d6fdbcd
   - enabled: 1
