@@ -43,12 +43,19 @@ public class MovementController : MonoBehaviour
     private void Update()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * playerSpeedKeyboard * 100;
+        float velocityY = rigidBody.velocity.y;
 
         if (Input.GetButtonDown("Jump"))
         {
             animator.SetBool("IsJump", true);
             isJump = true;
             doJump = true;
+        }
+
+        if (isJump && velocityY < -0.1f)
+        {
+            animator.SetBool("IsJump", false);
+            isJump = false;
         }
     }
 
@@ -78,17 +85,13 @@ public class MovementController : MonoBehaviour
         }
         doJump = false;
 
-        if (isJump && velocityY == 0f)
-        {
-            animator.SetBool("IsJump", false);
-            isJump = false;
-        }
+
     }
 
     public void JumpClick()
     {
-        animator.SetBool("IsJump", true);
         isJump = true;
         doJump = true;
+        animator.SetBool("IsJump", true);
     }
 }
