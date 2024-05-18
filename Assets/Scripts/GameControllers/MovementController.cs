@@ -23,6 +23,7 @@ public class MovementController : MonoBehaviour
     private Animator animator;
     private Rigidbody2D helmetRigidBody;
 
+    private bool doJump = false;
     private bool isJump = false;
     private float horizontalMove = 0f;
 
@@ -45,7 +46,9 @@ public class MovementController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
+            animator.SetBool("IsJump", true);
             isJump = true;
+            doJump = true;
         }
     }
 
@@ -66,19 +69,26 @@ public class MovementController : MonoBehaviour
         if (movement != 0)
         {
             animator.SetFloat("Velocity", velocity);
-            playerController.Move(movement * Time.fixedDeltaTime, false, isJump);
+            playerController.Move(movement * Time.fixedDeltaTime, false, doJump);
         }
         else
         {
             animator.SetFloat("Velocity", velocityKeyboard);
-            playerController.Move(horizontalMove * Time.fixedDeltaTime, false, isJump);
+            playerController.Move(horizontalMove * Time.fixedDeltaTime, false, doJump);
         }
+        doJump = false;
 
-        isJump = false;
+        if (isJump && velocityY == 0f)
+        {
+            animator.SetBool("IsJump", false);
+            isJump = false;
+        }
     }
 
     public void JumpClick()
     {
+        animator.SetBool("IsJump", true);
         isJump = true;
+        doJump = true;
     }
 }
