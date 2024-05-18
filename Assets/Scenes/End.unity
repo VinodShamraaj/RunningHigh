@@ -1330,7 +1330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159ecfbc98355ad40be6e635d5f62588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputScore: {fileID: 1773670031}
+  inputScore: 0
+  scoreText: {fileID: 1773670031}
   inputName: {fileID: 791189729}
   submitScoreEvent:
     m_PersistentCalls:
